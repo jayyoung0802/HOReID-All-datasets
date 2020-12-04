@@ -13,8 +13,14 @@ def testwithVer2(config, logger, base, loaders, test_dataset, use_gcn, use_gm):
     # init dataset
     if test_dataset == 'market':
         loaders = [loaders.market_query_loader, loaders.market_gallery_loader]
-    elif test_dataset == 'duke':
+    if test_dataset == 'duke':
         loaders = [loaders.duke_query_loader, loaders.duke_gallery_loader]
+    if test_dataset == 'pr':
+        loaders = [loaders.pr_query_loader, loaders.pr_gallery_loader]
+    if test_dataset == 'pi':
+        loaders = [loaders.pi_query_loader, loaders.pi_gallery_loader]
+    if test_dataset == 'occreid':
+        loaders = [loaders.occreid_query_loader, loaders.occreid_gallery_loader]
 
     # compute query and gallery features
     with torch.no_grad():

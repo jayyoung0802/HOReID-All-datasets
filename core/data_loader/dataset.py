@@ -51,7 +51,7 @@ class PersonReIDSamples:
         samples = []
         root_path, _, files_name = os_walk(folder_dir)
         for file_name in files_name:
-            if '.jpg' in file_name:
+            if '.jpg' or '.tif' in file_name:
                 identi_id, camera_id = self._analysis_file_name(file_name)
                 samples.append([root_path + file_name, identi_id, camera_id])
         return samples
@@ -79,6 +79,48 @@ class Samples4Market(PersonReIDSamples):
         :return:
         '''
         split_list = file_name.replace('.jpg', '').replace('c', '').replace('s','').split('_')
+        identi_id, camera_id = int(split_list[0]), int(split_list[1])
+        return identi_id, camera_id
+
+class Samples4Pr(PersonReIDSamples):
+    '''
+    Market Dataset
+    '''
+    def _analysis_file_name(self, file_name):
+        '''
+
+        :param file_name: format like 001_c0_001.jpg
+        :return:
+        '''
+        split_list = file_name.replace('.jpg', '').replace('c', '').split('_')
+        identi_id, camera_id = int(split_list[0]), int(split_list[1])
+        return identi_id, camera_id
+
+class Samples4Pi(PersonReIDSamples):
+    '''
+    Market Dataset
+    '''
+    def _analysis_file_name(self, file_name):
+        '''
+
+        :param file_name: format like 0001_c1_0000.jpg
+        :return:
+        '''
+        split_list = file_name.replace('.jpg', '').replace('c', '').split('_')
+        identi_id, camera_id = int(split_list[0]), int(split_list[1])
+        return identi_id, camera_id
+
+class Samples4Occreid(PersonReIDSamples):
+    '''
+    Market Dataset
+    '''
+    def _analysis_file_name(self, file_name):
+        '''
+
+        :param file_name: format like 001_c1_01.tif
+        :return:
+        '''
+        split_list = file_name.replace('.tif', '').replace('c', '').split('_')
         identi_id, camera_id = int(split_list[0]), int(split_list[1])
         return identi_id, camera_id
 

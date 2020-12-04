@@ -95,22 +95,71 @@ def main(config):
 		else:
 			assert 0, 'please set resume_test_path and resume_test_epoch '
 		# test
+		print('It is in test mode!!!\n')
+		print(config.train_dataset)
 		if config.train_dataset=='duke':
-			print('duke test')
-			duke_map, duke_rank = testwithVer2(config, logger, base, loaders, 'duke', use_gcn=False, use_gm=False)
-			logger('Time: {},  base, Dataset: Duke  \nmAP: {} \nRank: {}'.format(time_now(), duke_map, duke_rank))
-			duke_map, duke_rank = testwithVer2(config, logger, base, loaders, 'duke', use_gcn=True, use_gm=False)
-			logger('Time: {},  base+gcn, Dataset: Duke  \nmAP: {} \nRank: {}'.format(time_now(), duke_map, duke_rank))
-			duke_map, duke_rank = testwithVer2(config, logger, base, loaders, 'duke', use_gcn=True, use_gm=True)
-			logger('Time: {},  base+gcn+gm, Dataset: Duke  \nmAP: {} \nRank: {}'.format(time_now(), duke_map, duke_rank))
+			print('########## duke test ##########')
+			with Tock('1 Phase'):
+				duke_map, duke_rank = testwithVer2(config, logger, base, loaders, 'duke', use_gcn=False, use_gm=False)
+				logger('Time: {},  base, Dataset: Duke  \nmAP: {} \nRank: {}'.format(time_now(), duke_map, duke_rank))
+			with Tock('2 Phase'):
+				duke_map, duke_rank = testwithVer2(config, logger, base, loaders, 'duke', use_gcn=True, use_gm=False)
+				logger('Time: {},  base+gcn, Dataset: Duke  \nmAP: {} \nRank: {}'.format(time_now(), duke_map, duke_rank))
+			with Tock('3 Phase'):
+				duke_map, duke_rank = testwithVer2(config, logger, base, loaders, 'duke', use_gcn=True, use_gm=True)
+				logger('Time: {},  base+gcn+gm, Dataset: Duke  \nmAP: {} \nRank: {}'.format(time_now(), duke_map, duke_rank))
 			logger('')
+
 		if config.train_dataset=='market':
-			market_map, market_rank = testwithVer2(config, logger, base, loaders, 'market', use_gcn=False, use_gm=False)
-			logger('Time: {},  base, Dataset: market_map, market_rank  \nmAP: {} \nRank: {}'.format(time_now(), market_map, market_rank))
-			market_map, market_rank = testwithVer2(config, logger, base, loaders, 'market', use_gcn=True, use_gm=False)
-			logger('Time: {},  base+gcn, Dataset: market_map, market_rank  \nmAP: {} \nRank: {}'.format(time_now(), market_map, market_rank))
-			market_map, market_rank = testwithVer2(config, logger, base, loaders, 'market', use_gcn=True, use_gm=True)
-			logger('Time: {},  base+gcn+gm, Dataset: market_map, market_rank  \nmAP: {} \nRank: {}'.format(time_now(), market_map, market_rank))
+			print('########## market test ##########')
+			with Tock('1 Phase'):
+				market_map, market_rank = testwithVer2(config, logger, base, loaders, 'market', use_gcn=False, use_gm=False)
+				logger('Time: {},  base, Dataset: market_map, market_rank  \nmAP: {} \nRank: {}'.format(time_now(), market_map, market_rank))
+			with Tock('2 Phase'):
+				market_map, market_rank = testwithVer2(config, logger, base, loaders, 'market', use_gcn=True, use_gm=False)
+				logger('Time: {},  base+gcn, Dataset: market_map, market_rank  \nmAP: {} \nRank: {}'.format(time_now(), market_map, market_rank))
+			with Tock('3 Phase'):
+				market_map, market_rank = testwithVer2(config, logger, base, loaders, 'market', use_gcn=True, use_gm=True)
+				logger('Time: {},  base+gcn+gm, Dataset: market_map, market_rank  \nmAP: {} \nRank: {}'.format(time_now(), market_map, market_rank))
+			logger('')
+		
+		if config.train_dataset=='pr':
+			print('########## partial reid test ##########')
+			with Tock('1 Phase'):
+				pr_map, pr_rank = testwithVer2(config, logger, base, loaders, 'pr', use_gcn=False, use_gm=False)
+				logger('Time: {},  base, Dataset: pr_map, pr_rank  \nmAP: {} \nRank: {}'.format(time_now(), pr_map, pr_rank))
+			with Tock('2 Phase'):
+				pr_map, pr_rank = testwithVer2(config, logger, base, loaders, 'pr', use_gcn=True, use_gm=False)
+				logger('Time: {},  base+gcn, Dataset: pr_map, pr_rank  \nmAP: {} \nRank: {}'.format(time_now(), pr_map, pr_rank))
+			with Tock('3 Phase'):
+				pr_map, pr_rank = testwithVer2(config, logger, base, loaders, 'pr', use_gcn=True, use_gm=True)
+				logger('Time: {},  base+gcn+gm, Dataset: pr_map, pr_rank  \nmAP: {} \nRank: {}'.format(time_now(), pr_map, pr_rank))
+			logger('')
+		
+		if config.train_dataset=='pi':
+			print('########## partial iLIDS test ##########')
+			with Tock('1 Phase'):
+				pi_map, pi_rank = testwithVer2(config, logger, base, loaders, 'pi', use_gcn=False, use_gm=False)
+				logger('Time: {},  base, Dataset: pi_map, pi_rank  \nmAP: {} \nRank: {}'.format(time_now(), pi_map, pi_rank))
+			with Tock('2 Phase'):
+				pi_map, pi_rank = testwithVer2(config, logger, base, loaders, 'pi', use_gcn=True, use_gm=False)
+				logger('Time: {},  base+gcn, Dataset: pi_map, pi_rank  \nmAP: {} \nRank: {}'.format(time_now(), pi_map, pi_rank))
+			with Tock('3 Phase'):
+				pi_map, pi_rank = testwithVer2(config, logger, base, loaders, 'pi', use_gcn=True, use_gm=True)
+				logger('Time: {},  base+gcn+gm, Dataset: pi_map, pi_rank  \nmAP: {} \nRank: {}'.format(time_now(), pi_map, pi_rank))
+			logger('')
+		
+		if config.train_dataset=='occreid':
+			print('########## occ reid test ##########')
+			with Tock('1 Phase'):
+				occreid_map, occreid_rank = testwithVer2(config, logger, base, loaders, 'occreid', use_gcn=False, use_gm=False)
+				logger('Time: {},  base, Dataset: occreid_map, occreid_rank  \nmAP: {} \nRank: {}'.format(time_now(), occreid_map, occreid_rank))
+			with Tock('2 Phase'):
+				occreid_map, occreid_rank = testwithVer2(config, logger, base, loaders, 'occreid', use_gcn=True, use_gm=False)
+				logger('Time: {},  base+gcn, Dataset: occreid_map, occreid_rank  \nmAP: {} \nRank: {}'.format(time_now(), occreid_map, occreid_rank))
+			with Tock('3 Phase'):
+				occreid_map, occreid_rank = testwithVer2(config, logger, base, loaders, 'occreid', use_gcn=True, use_gm=True)
+				logger('Time: {},  base+gcn+gm, Dataset: occreid_map, occreid_rank  \nmAP: {} \nRank: {}'.format(time_now(), occreid_map, occreid_rank))
 			logger('')
 		
 
@@ -140,6 +189,10 @@ if __name__ == '__main__':
 	# dataset configuration
 	parser.add_argument('--duke_path', type=str, default='./occluded/duke')
 	parser.add_argument('--market_path', type=str, default='./occluded/market')
+	parser.add_argument('--pr_path', type=str, default='/home/jayyoung/code/ReID/DATASET/partial_reid/')
+	parser.add_argument('--pi_path', type=str, default='/home/jayyoung/code/ReID/DATASET/partial_ilids/')
+	parser.add_argument('--occreid_path', type=str, default='/home/jayyoung/code/ReID/DATASET/Occluded_REID/')
+
 	parser.add_argument('--train_dataset', type=str, default='duke', help='occluded_duke')
 	parser.add_argument('--image_size', type=int, nargs='+', default=[256, 128])
 	parser.add_argument('--p', type=int, default=16, help='person count in a batch')

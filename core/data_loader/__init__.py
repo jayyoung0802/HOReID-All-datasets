@@ -70,23 +70,101 @@ class Loaders:
 
             # load
             self._load() 
+        
+        if config.train_dataset=='pr':
+            self.datasets = ['pr']
+
+            # dataset
+            self.pr_path = config.pr_path
+            self.train_dataset = config.train_dataset
+            assert self.train_dataset in self.datasets
+
+            # batch size
+            self.p = config.p
+            self.k = config.k
+
+            # dataset paths
+            self.samples_path = {
+                #'pr': os.path.join(config.market_path, 'bounding_box_train/'),
+                'pr_query': os.path.join(self.pr_path, 'query/'),
+                'pr_gallery': os.path.join(self.pr_path, 'bounding_box_test/')}
+
+            # load
+            self._load() 
+
+        if config.train_dataset=='pi':
+            self.datasets = ['pi']
+
+            # dataset
+            self.pi_path = config.pi_path
+            self.train_dataset = config.train_dataset
+            assert self.train_dataset in self.datasets
+
+            # batch size
+            self.p = config.p
+            self.k = config.k
+
+            # dataset paths
+            self.samples_path = {
+                #'pi': os.path.join(config.market_path, 'bounding_box_train/'),
+                'pi_query': os.path.join(self.pi_path, 'query/'),
+                'pi_gallery': os.path.join(self.pi_path, 'bounding_box_test/')}
+
+            # load
+            self._load() 
+
+        if config.train_dataset=='occreid':
+            self.datasets = ['occreid']
+
+            # dataset
+            self.occreid_path = config.occreid_path
+            self.train_dataset = config.train_dataset
+            assert self.train_dataset in self.datasets
+
+            # batch size
+            self.p = config.p
+            self.k = config.k
+
+            # dataset paths
+            self.samples_path = {
+                #'pi': os.path.join(config.market_path, 'bounding_box_train/'),
+                'occreid_query': os.path.join(self.occreid_path, 'query/'),
+                'occreid_gallery': os.path.join(self.occreid_path, 'bounding_box_test/')}
+
+            # load
+            self._load()
 
 
     def _load(self):
-
-        # train dataset and iter
-        train_samples = self._get_train_samples(self.train_dataset)
-        self.train_iter = self._get_uniform_iter(train_samples, self.transform_train, self.p, self.k)
-
         # duke test dataset and loader
         if self.train_dataset=='duke':
+            # train dataset and iter
+            train_samples = self._get_train_samples(self.train_dataset)
+            self.train_iter = self._get_uniform_iter(train_samples, self.transform_train, self.p, self.k)
             self.duke_query_samples, self.duke_gallery_samples = self._get_test_samples('duke')
             self.duke_query_loader = self._get_loader(self.duke_query_samples, self.transform_test, 128)
             self.duke_gallery_loader = self._get_loader(self.duke_gallery_samples, self.transform_test, 128)
         if self.train_dataset=='market':
+            train_samples = self._get_train_samples(self.train_dataset)
+            self.train_iter = self._get_uniform_iter(train_samples, self.transform_train, self.p, self.k)
             self.market_query_samples, self.market_gallery_samples = self._get_test_samples('market')
             self.market_query_loader = self._get_loader(self.market_query_samples, self.transform_test, 128)
             self.market_gallery_loader = self._get_loader(self.market_gallery_samples, self.transform_test, 128)
+
+        if self.train_dataset=='pr':
+            self.pr_query_samples, self.pr_gallery_samples = self._get_test_samples('pr')
+            self.pr_query_loader = self._get_loader(self.pr_query_samples, self.transform_test, 128)
+            self.pr_gallery_loader = self._get_loader(self.pr_gallery_samples, self.transform_test, 128)
+        
+        if self.train_dataset=='pi':
+            self.pi_query_samples, self.pi_gallery_samples = self._get_test_samples('pi')
+            self.pi_query_loader = self._get_loader(self.pi_query_samples, self.transform_test, 128)
+            self.pi_gallery_loader = self._get_loader(self.pi_gallery_samples, self.transform_test, 128)
+        
+        if self.train_dataset=='occreid':
+            self.occreid_query_samples, self.occreid_gallery_samples = self._get_test_samples('occreid')
+            self.occreid_query_loader = self._get_loader(self.occreid_query_samples, self.transform_test, 128)
+            self.occreid_gallery_loader = self._get_loader(self.occreid_gallery_samples, self.transform_test, 128)
 
     def _get_train_samples(self, train_dataset):
         train_samples_path = self.samples_path[train_dataset]
@@ -107,6 +185,25 @@ class Loaders:
             gallery_data_path = self.samples_path[test_dataset + '_gallery']
             query_samples = Samples4Market(query_data_path, reorder=False)
             gallery_samples = Samples4Market(gallery_data_path, reorder=False)
+        
+        if test_dataset=='pr':
+            query_data_path = self.samples_path[test_dataset + '_query']
+            gallery_data_path = self.samples_path[test_dataset + '_gallery']
+            query_samples = Samples4Pr(query_data_path, reorder=False)
+            gallery_samples = Samples4Pr(gallery_data_path, reorder=False)
+        
+        if test_dataset=='pi':
+            query_data_path = self.samples_path[test_dataset + '_query']
+            gallery_data_path = self.samples_path[test_dataset + '_gallery']
+            query_samples = Samples4Pi(query_data_path, reorder=False)
+            gallery_samples = Samples4Pi(gallery_data_path, reorder=False)
+        
+        if test_dataset=='occreid':
+            query_data_path = self.samples_path[test_dataset + '_query']
+            gallery_data_path = self.samples_path[test_dataset + '_gallery']
+            query_samples = Samples4Occreid(query_data_path, reorder=False)
+            gallery_samples = Samples4Occreid(gallery_data_path, reorder=False)
+        
         return query_samples, gallery_samples
 
     def _get_uniform_iter(self, samples, transform, p, k):
