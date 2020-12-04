@@ -188,7 +188,7 @@ if __name__ == '__main__':
 
 	# dataset configuration
 	parser.add_argument('--duke_path', type=str, default='./occluded/duke')
-	parser.add_argument('--market_path', type=str, default='./occluded/market')
+	parser.add_argument('--market_path', type=str, default='/home/jayyoung/code/ReID/DATASET/market')
 	parser.add_argument('--pr_path', type=str, default='/home/jayyoung/code/ReID/DATASET/partial_reid/')
 	parser.add_argument('--pi_path', type=str, default='/home/jayyoung/code/ReID/DATASET/partial_ilids/')
 	parser.add_argument('--occreid_path', type=str, default='/home/jayyoung/code/ReID/DATASET/Occluded_REID/')
