@@ -216,6 +216,9 @@ if __name__ == '__main__':
 	parser.add_argument('--gm_lr_scale', type=float, default=1.0, help='')
 	parser.add_argument('--weight_p_loss', type=float, default=1.0, help='')
 
+	# duke 	  weight_p_loss = 1.0  weight_ver_loss = 0.1   better
+	# market  weight_p_loss = 1.0  weight_ver_loss = 1.0   
+
 	# verification model
 	parser.add_argument('--weight_ver_loss', type=float, default=0.1, help='')
 	parser.add_argument('--ver_lr_scale', type=float, default=1.0, help='')
@@ -228,9 +231,9 @@ if __name__ == '__main__':
 	parser.add_argument('--milestones', nargs='+', type=int, default=[40, 70], help='milestones for the learning rate decay')
 	parser.add_argument('--base_learning_rate', type=float, default=0.00035)
 	parser.add_argument('--weight_decay', type=float, default=0.0005)
-	parser.add_argument('--total_train_epochs', type=int, default=200)
+	parser.add_argument('--total_train_epochs', type=int, default=150)
 	parser.add_argument('--auto_resume_training_from_lastest_steps', type=ast.literal_eval, default=True)
-	parser.add_argument('--max_save_model_num', type=int, default=100, help='0 for max num is infinit')
+	parser.add_argument('--max_save_model_num', type=int, default=60, help='0 for max num is infinit')
 
 	# test configuration
 	parser.add_argument('--resume_test_path', type=str, default='', help=' for no resuming')
