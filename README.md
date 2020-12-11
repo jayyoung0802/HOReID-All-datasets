@@ -10,6 +10,8 @@ conda install pytorch==1.1.0 torchvision==0.3.0 -c pytorch
 # GPU Memory >= 10G, Memory >= 20G
 ```
 
+All Occluded Person Re-Identification Datasets can be used, but the hyperparameters trained on Market1501 dataset need debugging. The accuracy of the author's original paper cannot be realized temporarily on Market1501 dataset. Welcome to discuss!
+
 
 
 
